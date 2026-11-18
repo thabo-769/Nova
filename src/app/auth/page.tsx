@@ -32,38 +32,39 @@ export default function AuthPage() {
 
   const explainError = (cause: unknown, context: 'email' | 'google') => {
     console.error('Firebase Auth error:', cause);
-    const code = (cause as { code?: string })?.code || '';
+    const code = ((cause as { code?: string })?.code || '').toLowerCase();
     const rawMessage = (cause as { message?: string })?.message || '';
 
     const messages: Record<string, string> = {
-      'auth/invalid-email': 'Please enter a valid email address.',
-      'auth/user-not-found': 'We couldn’t find an account with that email. Switch to "Create account" to sign up.',
-      'auth/wrong-password': 'That password is incorrect. Please try again.',
-      'auth/invalid-credential': 'Those sign-in details are incorrect. If you have not created an account yet, switch to "Create account".',
-      'auth/email-already-in-use': 'An account already uses this email. Please switch to "Sign in" instead.',
-      'auth/weak-password': 'Choose a password with at least 6 characters.',
-      'auth/popup-closed-by-user': 'Google sign-in popup was closed before completing.',
-      'auth/popup-blocked': 'Sign-in popup was blocked by your browser. Please allow popups for this site and try again.',
-      'auth/cancelled-popup-request': 'Google sign-in operation was cancelled. Please try again.',
-      'auth/unauthorized-domain': 'This domain is not authorized in Firebase Auth. Go to Firebase Console > Authentication > Settings > Authorized domains and add localhost / your domain.',
-      'auth/operation-not-allowed':
+      'invalid-email': 'Please enter a valid email address.',
+      'user-not-found': 'We couldn’t find an account with that email. Switch to "Create account" to sign up.',
+      'wrong-password': 'That password is incorrect. Please try again.',
+      'invalid-credential': 'Those sign-in details are incorrect. If you have not created an account yet, switch to "Create account".',
+      'email-already-in-use': 'An account already uses this email. Please switch to "Sign in" instead.',
+      'weak-password': 'Choose a password with at least 6 characters.',
+      'popup-closed-by-user': 'Google sign-in popup was closed before completing.',
+      'popup-blocked': 'Sign-in popup was blocked by your browser. Please allow popups for this site, or continue in Demo Mode below.',
+      'cancelled-popup-request': 'Google sign-in operation was cancelled. Please try again.',
+      'unauthorized-domain': 'This domain is not authorized in Firebase Auth. Go to Firebase Console > Authentication > Settings > Authorized domains and add this domain, or continue in Demo Mode below.',
+      'operation-not-allowed':
         context === 'google'
-          ? 'Google sign-in is not enabled. In Firebase Console, go to Authentication > Sign-in method, click "Google" and enable it.'
-          : 'Email/Password sign-in is not enabled. In Firebase Console, go to Authentication > Sign-in method, click "Email/Password" and enable it.',
-      'auth/network-request-failed': 'Network connection issue or ad-blocker detected. Check your internet connection and try again.',
-      'auth/too-many-requests': 'Too many failed attempts. Access to this account is temporarily disabled. Please try again later.',
-      'auth/api-key-not-valid': 'Invalid Firebase API key in .env.local. Please verify your project credentials.',
-      'auth/invalid-api-key': 'Invalid Firebase API key in .env.local. Please verify your project credentials.',
-      'auth/user-disabled': 'This account has been disabled. Please contact Nova Diner support.',
-      'auth/web-storage-unsupported': 'Your browser is blocking cookies/storage. Please allow site data and cookies, then try again.',
+          ? 'Google sign-in is not enabled in Firebase Console. Go to Authentication > Sign-in method, click "Google" and enable it. (You can also continue in Demo Mode below).'
+          : 'Email/Password sign-in is not enabled in Firebase Console. Go to Authentication > Sign-in method, click "Email/Password" and enable it. (You can also continue in Demo Mode below).',
+      'network-request-failed': 'Network connection issue or ad-blocker detected. Check your internet connection and try again.',
+      'too-many-requests': 'Too many failed attempts. Access to this account is temporarily disabled. Please try again later.',
+      'api-key-not-valid': 'Firebase API key is invalid or not configured. You can continue in Demo Mode below while your Firebase credentials are being verified.',
+      'invalid-api-key': 'Firebase API key is invalid or not configured. You can continue in Demo Mode below while your Firebase credentials are being verified.',
+      'user-disabled': 'This account has been disabled. Please contact Nova Diner support.',
+      'web-storage-unsupported': 'Your browser is blocking cookies/storage. Please allow site data and cookies, then try again.',
     };
 
-    if (messages[code]) {
-      setError(messages[code]);
+    const matchedKey = Object.keys(messages).find((key) => code.includes(key));
+    if (matchedKey) {
+      setError(messages[matchedKey]);
     } else if (rawMessage) {
-      setError(`Sign-in error: ${rawMessage.replace(/^Firebase:\s*/i, '')} (${code || 'unknown'})`);
+      setError(`Sign-in error: ${rawMessage.replace(/^Firebase:\s*/i, '')}`);
     } else {
-      setError('We couldn’t complete sign-in. Please try again.');
+      setError('We couldn’t complete sign-in. Please try again or continue in Demo Mode below.');
     }
   };
 
@@ -132,8 +133,29 @@ export default function AuthPage() {
                 </Tabs>
 
                 {error && (
-                  <Alert severity="error" sx={{ mb: 2.5, borderRadius: 2, '& .MuiAlert-message': { fontSize: 13, lineHeight: 1.5 } }}>
-                    {error}
+                  <Alert
+                    severity="error"
+                    sx={{ mb: 2.5, borderRadius: 2, '& .MuiAlert-message': { fontSize: 13, lineHeight: 1.5, width: '100%' } }}
+                  >
+                    <div>{error}</div>
+                    <Button
+                      size="small"
+                      onClick={handleDemoSignIn}
+                      sx={{
+                        mt: 1.5,
+                        textTransform: 'none',
+                        fontWeight: 700,
+                        fontSize: 12,
+                        color: '#d4af37',
+                        bgcolor: 'rgba(0,0,0,0.3)',
+                        border: '1px solid rgba(212,175,55,0.4)',
+                        borderRadius: 1.5,
+                        px: 1.5,
+                        '&:hover': { bgcolor: 'rgba(0,0,0,0.5)' },
+                      }}
+                    >
+                      Bypass & Continue as Demo Customer →
+                    </Button>
                   </Alert>
                 )}
 
