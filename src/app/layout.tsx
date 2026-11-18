@@ -1,19 +1,6 @@
 import type { Metadata } from 'next';
-import { Playfair_Display, Inter } from 'next/font/google';
 import './globals.css';
 import { ClientLayout } from './ClientLayout';
-
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-serif',
-  display: 'swap',
-});
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   title: 'Nova Diner | Premium Restaurant & Dining – Bulawayo, Zimbabwe',
@@ -36,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark scroll-smooth">
-      <body className={`${inter.variable} ${playfair.variable} antialiased selection:bg-nova-gold selection:text-black`}>
+      <body className="font-sans antialiased selection:bg-nova-gold selection:text-black">
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

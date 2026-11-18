@@ -63,7 +63,7 @@ export default function ReservationsPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!customerName || !customerPhone || !customerEmail) {
+    if (!customerName.trim() || !customerPhone.trim() || !customerEmail.trim()) {
       alert('Please fill in your name, contact phone and email.');
       return;
     }
@@ -85,7 +85,7 @@ export default function ReservationsPage() {
 
       const res = await createReservation({
         userId: user?.id,
-        customerName,
+        customerName: customerName.trim(),
         customerPhone,
         customerEmail,
         date,
@@ -127,6 +127,21 @@ export default function ReservationsPage() {
         <p className="text-xs sm:text-sm text-gray-400">
           Reserve your dining table at Bulawayo’s leading fine restaurant. Indoor seating, starlight patio, and VIP booths available.
         </p>
+      </div>
+
+      <div className="relative isolate overflow-hidden rounded-2xl border border-nova-gold/20 shadow-2xl h-48 sm:h-64 lg:h-72">
+        <img
+          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1800&q=85"
+          alt="An elegantly set restaurant table beneath warm evening lights"
+          className="absolute inset-0 h-full w-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/35 to-black/10" />
+        <div className="absolute inset-0 flex items-end p-6 sm:p-9">
+          <div className="max-w-md">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-nova-gold">Your evening, beautifully set</p>
+            <p className="mt-2 font-serif text-2xl sm:text-3xl text-white">A table worth looking forward to.</p>
+          </div>
+        </div>
       </div>
 
       {bookingStatus === 'confirmed' ? (

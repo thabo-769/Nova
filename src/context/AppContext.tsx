@@ -31,10 +31,13 @@ import {
   INITIAL_ORDERS,
   INITIAL_RESERVATIONS,
 } from '@/data/mockData';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 
 interface AppContextType {
   // Auth & Profile
   user: UserProfile | null;
+  isAuthReady: boolean;
   switchDemoUser: (role: Role) => void;
   loginAs: (email: string) => void;
   logout: () => void;
@@ -110,7 +113,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [mounted, setMounted] = useState(false);
 
   // User state
-  const [user, setUser] = useState<UserProfile | null>(DEMO_USERS.customer);
+  const [user, setUser] = useState<UserProfile | null>(null);
+  const [isAuthReady, setIsAuthReady] = useState(false);
 
   // Menu items & Categories
   const [menuItems, setMenuItems] = useState<MenuItem[]>(MENU_ITEMS);
@@ -138,6 +142,38 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     document.documentElement.classList.add('dark');
     localStorage.setItem('nova_theme', 'dark');
 
+    const unsubscribe = auth ? onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        setUser((current) => ({
+          id: firebaseUser.uid,
+          name: firebaseUser.displayName || firebaseUser.email?.split('@')[0] || 'Nova Guest',
+          email: firebaseUser.email || '',
+          photoURL: firebaseUser.photoURL || undefined,
+          role: 'customer',
+          loyaltyPoints: current?.id === firebaseUser.uid ? current.loyaltyPoints : 100,
+          loyaltyTier: current?.id === firebaseUser.uid ? current.loyaltyTier : 'Bronze',
+          savedAddresses: current?.id === firebaseUser.uid ? current.savedAddresses : [],
+          favoriteItemIds: current?.id === firebaseUser.uid ? current.favoriteItemIds : [],
+          createdAt: current?.id === firebaseUser.uid ? current.createdAt : new Date().toISOString(),
+        }));
+      } else {
+        const savedRole = localStorage.getItem('nova_active_user');
+        if (savedRole && DEMO_USERS[savedRole]) {
+          setUser(DEMO_USERS[savedRole]);
+        } else {
+          setUser(null);
+        }
+      }
+      setIsAuthReady(true);
+    }) : undefined;
+    if (!auth) {
+      const savedRole = localStorage.getItem('nova_active_user');
+      if (savedRole && DEMO_USERS[savedRole]) {
+        setUser(DEMO_USERS[savedRole]);
+      }
+      setIsAuthReady(true);
+    }
+
     const savedCart = localStorage.getItem('nova_cart');
     if (savedCart) {
       try {
@@ -146,11 +182,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         console.error(e);
       }
     }
-
-    const savedUser = localStorage.getItem('nova_active_user');
-    if (savedUser && DEMO_USERS[savedUser]) {
-      setUser(DEMO_USERS[savedUser]);
-    }
+    return () => unsubscribe?.();
   }, []);
 
   // Sync cart to localStorage
@@ -189,8 +221,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const logout = () => {
-    setUser(null);
     localStorage.removeItem('nova_active_user');
+    if (auth && auth.currentUser) {
+      void signOut(auth);
+    }
+    setUser(null);
   };
 
   const toggleFavorite = (itemId: string) => {
@@ -550,6 +585,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     <AppContext.Provider
       value={{
         user,
+    isAuthReady,
         switchDemoUser,
         loginAs,
         logout,

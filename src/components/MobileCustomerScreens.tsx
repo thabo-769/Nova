@@ -57,7 +57,23 @@ export function MobileAbout() {
 
 export function MobileReservation() {
   const { user, tables, reservations, createReservation } = useApp();
-  const [date,setDate]=useState(new Date(Date.now()+86400000).toISOString().slice(0,10)); const [time,setTime]=useState('19:00'); const [guests,setGuests]=useState(2); const [done,setDone]=useState(false);
-  async function book(){const table=tables.find(t=>t.capacity>=guests&& !reservations.some(r=>r.date===date&&r.time===time&&r.tableId===t.id));if(!table){alert('No table is available at this time.');return;} await createReservation({userId:user?.id,customerName:user?.name||'Guest',customerPhone:user?.phone||'',customerEmail:user?.email||'',date,time,guests,seatingPreference:'indoor',tableId:table.id,tableNumber:table.number,occasion:'casual',specialRequests:''});setDone(true);}
-  return <div className="mobile-page mobile-reservation"><ScreenHeader title="Book a Table" right={<CalendarDays/>}/><div className="reservation-cover"><FoodArt kind="restaurant" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop" alt="Nova Diner dining room"/></div><section><h1>Reserve Your Table</h1><p>Enjoy a special dining experience.</p><label className="mobile-panel input-panel"><CalendarDays/><span><small>Select Date</small><input type="date" value={date} onChange={e=>setDate(e.target.value)}/></span></label><label className="mobile-panel input-panel"><Clock/><span><small>Select Time</small><input type="time" value={time} onChange={e=>setTime(e.target.value)}/></span></label><label className="mobile-panel input-panel"><Users/><span><small>Number of Guests</small><select value={guests} onChange={e=>setGuests(Number(e.target.value))}>{[1,2,3,4,5,6,7,8].map(n=><option key={n} value={n}>{n} Guests</option>)}</select></span></label><button className="mobile-cta" onClick={book}>{done?'Table Booked ✓':'Book Table'}</button></section></div>;
+  const [date,setDate]=useState(new Date(Date.now()+86400000).toISOString().slice(0,10));
+  const [time,setTime]=useState('19:00');
+  const [guests,setGuests]=useState(2);
+  const [customerName,setCustomerName]=useState(user?.name || '');
+  const [done,setDone]=useState(false);
+  const [error,setError]=useState('');
+  const [busy,setBusy]=useState(false);
+  async function book(){
+    if(!customerName.trim()){setError('Please enter the name for this booking.');return;}
+    const table=tables.find(t=>t.capacity>=guests&& !reservations.some(r=>r.date===date&&r.time===time&&r.tableId===t.id));
+    if(!table){setError('No table is available at this time. Please choose another date or time.');return;}
+    setBusy(true);setError('');
+    try {
+      await createReservation({userId:user?.id,customerName:customerName.trim(),customerPhone:user?.phone||'',customerEmail:user?.email||'',date,time,guests,seatingPreference:'indoor',tableId:table.id,tableNumber:table.number,occasion:'casual',specialRequests:''});
+      setDone(true);
+    } catch (e) { setError(e instanceof Error ? e.message : 'Your booking could not be completed. Please try again.'); }
+    finally { setBusy(false); }
+  }
+  return <div className="mobile-page mobile-reservation"><ScreenHeader title="Book a Table" right={<CalendarDays/>}/><div className="reservation-cover"><FoodArt kind="restaurant" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop" alt="Nova Diner dining room"/></div><section><h1>Reserve Your Table</h1><p>Choose a time for a memorable meal at Nova Diner.</p><label className="mobile-panel input-panel"><CalendarDays/><span><small>Select Date</small><input type="date" min={new Date().toISOString().slice(0,10)} value={date} onChange={e=>setDate(e.target.value)}/></span></label><label className="mobile-panel input-panel"><Clock/><span><small>Select Time</small><input type="time" value={time} onChange={e=>setTime(e.target.value)}/></span></label><label className="mobile-panel input-panel"><Users/><span><small>Number of Guests</small><select value={guests} onChange={e=>setGuests(Number(e.target.value))}>{[1,2,3,4,5,6,7,8].map(n=><option key={n} value={n}>{n} {n===1?'Guest':'Guests'}</option>)}</select></span></label><label className="mobile-panel input-panel"><UserRound/><span><small>Name for the booking</small><input type="text" autoComplete="name" required value={customerName} onChange={e=>{setCustomerName(e.target.value);setError('');}} placeholder="Enter your full name"/></span></label>{error&&<p role="alert" className="reservation-error">{error}</p>}{done&&<p role="status" className="reservation-success">Your table is booked, {customerName.trim()}.</p>}<button className="mobile-cta" onClick={book} disabled={busy||done}>{busy?'Booking your table…':done?'Table Booked ✓':'Book Table'}</button></section></div>;
 }
