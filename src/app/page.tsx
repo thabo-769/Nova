@@ -10,7 +10,6 @@ import { MenuItem } from '@/types';
 import {
   Sparkles,
   ArrowRight,
-  Search,
   Calendar,
   Heart,
   Clock,
@@ -22,20 +21,33 @@ import {
   UtensilsCrossed,
   Gift
 } from 'lucide-react';
+import { BookOpen, Coffee, Plus } from 'lucide-react';
+import { FoodArt, NovaLogo } from '@/components/MobileNav';
+
+function MobileHome() {
+  const { menuItems, addToCart } = useApp();
+  const featured = menuItems.filter((item) => item.featured || item.popular).slice(0, 2);
+  return <div className="mobile-page mobile-home">
+    <div className="mobile-brandbar"><Link href="/" className="mobile-brand"><NovaLogo/> NOVA <b>DINER</b></Link></div>
+    <section className="mobile-hero-card"><div><h1>A Taste<br/>of Elegance</h1><p>Charcoal-fired flavor, made for sharing.</p><div className="mobile-hero-actions"><Link href="/menu" className="mobile-cta small order-cta">Order Now</Link><Link href="/reservations" className="mobile-cta small secondary">Reserve Table</Link></div></div><FoodArt kind="steak" src={featured[0]?.image} alt={featured[0]?.name || 'Grilled steak'} /></section>
+    <div className="mobile-shortcuts">{[{name:'Food',icon:UtensilsCrossed,href:'/menu'},{name:'Drinks',icon:Coffee,href:'/menu?category=drinks'},{name:'Offers',icon:Gift,href:'/rewards'},{name:'Menu',icon:BookOpen,href:'/menu'}].map(({name,icon:Icon,href})=><Link href={href} key={name}><Icon size={24} strokeWidth={1.8}/>{name}</Link>)}</div>
+    <section className="mobile-section"><div className="mobile-section-title"><h2>Popular Dishes</h2><Link href="/menu">See all <ArrowRight size={14}/></Link></div><div className="mobile-feature-grid">{featured.map((item,index)=><article className="mobile-feature-card" key={item.id}><FoodArt kind={index ? 'pasta' : 'steak'} src={item.image} alt={item.name}/><strong>{item.name}</strong><b>${item.price.toFixed(2)}</b><button onClick={()=>addToCart(item)} aria-label={`Add ${item.name} to cart`}><Plus size={22}/></button></article>)}</div></section>
+    <Link href="/about" className="mobile-about-link">Our Restaurant <ArrowRight size={18}/></Link>
+  </div>;
+}
 
 export default function HomePage() {
   const { menuItems, categories, user, promotions } = useApp();
   const [selectedMeal, setSelectedMeal] = useState<MenuItem | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
 
   // Featured meals
   const featuredDishes = menuItems.filter((i) => i.featured);
   const popularDishes = menuItems.filter((i) => i.popular);
 
   return (
-    <div className="space-y-16 pb-20">
+    <><MobileHome /><div className="space-y-16 pb-20 desktop-home">
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background imagery with dark luxury gradient overlays */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -49,29 +61,21 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(212,175,55,0.08)_0%,_transparent_70%)]" />
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
-          {/* Top Badge */}
-          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-black/60 border border-nova-gold/40 backdrop-blur-md mb-6">
-            <Sparkles className="w-4 h-4 text-nova-gold animate-pulse" />
-            <span className="text-xs uppercase tracking-widest font-semibold text-nova-gold">
-              Bulawayo’s Finest Culinary Destination
-            </span>
-          </div>
-
+        <div className="relative z-10 min-h-screen max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20 flex flex-col items-center justify-center">
           {/* Main Headline */}
-          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-[1.1] mb-6">
-            A Symphony of <span className="gold-shimmer">Charcoal Flame</span> & Fine Living
+          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-[1.05] mb-6">
+            A Taste of <span className="gold-shimmer">Elegance</span>
           </h1>
 
-          <p className="max-w-2xl mx-auto text-base sm:text-lg text-gray-300 font-light leading-relaxed mb-10">
-            Welcome to Nova Diner. Savor prime Zimbabwean aged steaks, woodfired artisan pizzas, and handcrafted cocktails. Order online for swift delivery or reserve an unforgettable table.
+          <p className="max-w-xl mx-auto text-base sm:text-lg text-gray-300 font-light leading-relaxed mb-10">
+            Charcoal-fired flavor, made for sharing.
           </p>
 
           {/* Primary Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
+          <div className="absolute bottom-16 left-1/2 -translate-x-1/2 mt-0 w-full max-w-md px-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/menu"
-              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-nova-red to-nova-redDark text-white font-bold text-sm tracking-wider uppercase hover:shadow-redGlow transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-2"
+              className="order-cta w-full sm:w-auto px-8 py-4 rounded-xl bg-black text-nova-gold border border-nova-gold font-bold text-sm tracking-wider uppercase hover:shadow-gold transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-2"
             >
               <UtensilsCrossed className="w-4 h-4" />
               <span>Order Now</span>
@@ -85,44 +89,18 @@ export default function HomePage() {
               <span>Reserve Table</span>
             </Link>
 
-            <Link
-              href="/date-night"
-              className="w-full sm:w-auto px-6 py-4 rounded-xl bg-nova-gold/20 hover:bg-nova-gold text-nova-gold hover:text-black font-bold text-sm tracking-wider uppercase border border-nova-gold transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-1.5"
-            >
-              <Heart className="w-4 h-4" />
-              <span>Date Night</span>
-            </Link>
           </div>
 
-          {/* Quick Search Bar */}
-          <div className="mt-12 max-w-xl mx-auto">
-            <div className="relative glass-panel rounded-2xl p-2 shadow-2xl flex items-center">
-              <Search className="w-5 h-5 text-nova-gold ml-3 mr-2" />
-              <input
-                type="text"
-                placeholder="Search Wagyu burgers, Ribeye steak, Piri Piri chicken, cocktails..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent text-sm text-white placeholder-gray-400 focus:outline-none px-2"
-              />
-              <Link
-                href={searchQuery ? `/menu?q=${encodeURIComponent(searchQuery)}` : '/menu'}
-                className="px-5 py-2.5 rounded-xl bg-nova-gold text-nova-black font-bold text-xs uppercase tracking-wider hover:bg-nova-goldLight transition whitespace-nowrap"
-              >
-                Find Food
-              </Link>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* 2. PROMOTIONS & ANNOUNCEMENT BANNER */}
       {promotions.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative rounded-2xl overflow-hidden border border-nova-gold/30 p-6 sm:p-8 bg-gradient-to-r from-red-950/70 via-black to-neutral-900 shadow-xl">
+          <div className="relative rounded-2xl overflow-hidden border border-nova-gold/30 p-6 sm:p-8 bg-gradient-to-r from-amber-950/40 via-black to-neutral-900 shadow-xl">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="space-y-2 text-center md:text-left">
-                <span className="px-3 py-1 rounded-full bg-nova-red text-white text-xs font-bold uppercase tracking-wider">
+                <span className="px-3 py-1 rounded-full bg-nova-gold text-black text-xs font-bold uppercase tracking-wider">
                   Special Offer Today
                 </span>
                 <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white">
@@ -170,7 +148,7 @@ export default function HomePage() {
           </div>
 
           <div className="p-6 rounded-2xl bg-nova-cardDark border border-nova-borderDark hover:border-nova-gold/40 transition group">
-            <div className="w-12 h-12 rounded-xl bg-nova-red/10 border border-nova-red/30 flex items-center justify-center text-nova-red mb-4 group-hover:scale-110 transition">
+            <div className="w-12 h-12 rounded-xl bg-nova-gold/10 border border-nova-gold/30 flex items-center justify-center text-nova-gold mb-4 group-hover:scale-110 transition">
               <Heart className="w-6 h-6" />
             </div>
             <h4 className="font-serif text-lg font-bold text-white mb-1">
@@ -229,10 +207,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <span className="text-xs uppercase tracking-widest text-nova-gold font-semibold">
-              Curated Offerings
-            </span>
-            <h2 className="font-serif text-3xl font-bold text-white mt-1">
+            <h2 className="font-serif text-3xl font-bold text-white">
               Explore Our Digital Menu
             </h2>
           </div>
@@ -269,10 +244,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <span className="text-xs uppercase tracking-widest text-nova-gold font-semibold flex items-center">
-              <Sparkles className="w-3.5 h-3.5 mr-1 text-nova-gold" /> Executive Chef’s Selection
-            </span>
-            <h2 className="font-serif text-3xl font-bold text-white mt-1">
+            <h2 className="font-serif text-3xl font-bold text-white">
               Today’s Featured Dishes
             </h2>
           </div>
@@ -299,10 +271,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <span className="text-xs uppercase tracking-widest text-nova-red font-semibold">
-              Customer Highlights
-            </span>
-            <h2 className="font-serif text-3xl font-bold text-white mt-1">
+            <h2 className="font-serif text-3xl font-bold text-white">
               Bulawayo Crowd Favorites
             </h2>
           </div>
@@ -339,11 +308,6 @@ export default function HomePage() {
           </div>
 
           <div className="absolute inset-0 flex flex-col justify-center p-8 sm:p-14 max-w-xl text-left">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-nova-red/90 text-white text-[11px] font-bold uppercase tracking-wider mb-4 w-fit">
-              <Heart className="w-3.5 h-3.5 fill-current" />
-              <span>Exclusive Romantic Experience</span>
-            </div>
-
             <h3 className="font-serif text-3xl sm:text-5xl font-bold text-white leading-tight mb-4">
               Plan Your Dream <span className="gold-shimmer">Nova Date Night</span>
             </h3>
@@ -378,9 +342,6 @@ export default function HomePage() {
               <Award className="w-7 h-7" />
             </div>
             <div>
-              <span className="text-xs uppercase tracking-wider text-nova-gold font-bold">
-                Nova Privé Club
-              </span>
               <h3 className="font-serif text-2xl font-bold text-white">
                 {user ? `${user.name}’s Loyalty Rewards` : 'Earn Points With Every Meal'}
               </h3>
@@ -407,6 +368,6 @@ export default function HomePage() {
         isOpen={!!selectedMeal}
         onClose={() => setSelectedMeal(null)}
       />
-    </div>
+    </div></>
   );
 }

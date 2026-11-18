@@ -96,7 +96,7 @@ export default function DateNightPage() {
           particleCount: 90,
           spread: 80,
           origin: { y: 0.6 },
-          colors: ['#A30D18', '#D4AF37', '#FFC0CB'],
+          colors: ['#101010', '#D4AF37', '#FFFFFF'],
         });
       } catch (e) {
         console.error(e);
@@ -124,13 +124,6 @@ export default function DateNightPage() {
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center py-16">
-          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-nova-red/80 border border-nova-gold/50 backdrop-blur-md mb-6 shadow-redGlow">
-            <Heart className="w-4 h-4 text-nova-gold fill-current" />
-            <span className="text-xs uppercase tracking-widest font-bold text-white">
-              Nova Diner Signature Experience
-            </span>
-          </div>
-
           <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-tight mb-6">
             Nova <span className="gold-shimmer">Date Night</span> Privé
           </h1>
@@ -144,9 +137,6 @@ export default function DateNightPage() {
       {/* 2. PACKAGES CAROUSEL / GRID */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-          <span className="text-xs uppercase tracking-widest text-nova-gold font-bold">
-            Curated Romantic Packages
-          </span>
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white">
             Choose Your Romance Package
           </h2>
@@ -233,7 +223,7 @@ export default function DateNightPage() {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {bookingConfirmed ? (
           <div className="p-8 sm:p-12 rounded-2xl bg-nova-cardDark border border-nova-gold/40 text-center space-y-6 shadow-2xl">
-            <div className="w-16 h-16 rounded-full bg-nova-red/20 border border-nova-red/40 flex items-center justify-center mx-auto text-nova-red">
+            <div className="w-16 h-16 rounded-full bg-nova-gold/20 border border-nova-gold/40 flex items-center justify-center mx-auto text-nova-gold">
               <Heart className="w-9 h-9 fill-current" />
             </div>
 

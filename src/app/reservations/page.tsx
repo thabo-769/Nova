@@ -16,6 +16,7 @@ import {
   ShieldCheck,
   ChevronRight,
 } from 'lucide-react';
+import { MobileReservation } from '@/components/MobileCustomerScreens';
 
 export default function ReservationsPage() {
   const { user, tables, reservations, createReservation } = useApp();
@@ -105,7 +106,7 @@ export default function ReservationsPage() {
           particleCount: 70,
           spread: 60,
           origin: { y: 0.6 },
-          colors: ['#D4AF37', '#A30D18', '#FFFFFF'],
+            colors: ['#D4AF37', '#101010', '#FFFFFF'],
         });
       } catch (e) {
         console.error(e);
@@ -117,12 +118,9 @@ export default function ReservationsPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+    <><MobileReservation /><div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10 desktop-reservation">
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto space-y-3">
-        <span className="text-xs uppercase tracking-widest text-nova-gold font-semibold flex items-center justify-center">
-          <Sparkles className="w-3.5 h-3.5 mr-1 text-nova-gold" /> Nova Diner Bulawayo
-        </span>
         <h1 className="font-serif text-3xl sm:text-5xl font-bold text-white">
           Table Reservation Experience
         </h1>
@@ -202,8 +200,8 @@ export default function ReservationsPage() {
           className="p-6 sm:p-10 rounded-2xl bg-nova-cardDark border border-nova-borderDark space-y-8 shadow-2xl"
         >
           {bookingStatus === 'error' && (
-            <div className="p-4 rounded-xl bg-red-950/50 border border-red-500/50 text-red-200 text-xs flex items-center space-x-3">
-              <AlertCircle className="w-5 h-5 shrink-0 text-red-400" />
+            <div className="p-4 rounded-xl bg-amber-950/40 border border-amber-500/40 text-amber-100 text-xs flex items-center space-x-3">
+              <AlertCircle className="w-5 h-5 shrink-0 text-amber-400" />
               <span>{errorMessage}</span>
             </div>
           )}
@@ -318,7 +316,7 @@ export default function ReservationsPage() {
                     onClick={() => setOccasion(o.id as OccasionType)}
                     className={`p-2.5 rounded-xl border text-left transition ${
                       occasion === o.id
-                        ? 'border-nova-red bg-nova-red/10 text-white font-bold'
+                        ? 'border-nova-gold bg-nova-gold/10 text-white font-bold'
                         : 'border-white/10 bg-white/5 hover:border-white/20 text-gray-300'
                     }`}
                   >
@@ -428,6 +426,6 @@ export default function ReservationsPage() {
           </div>
         </form>
       )}
-    </div>
+    </div></>
   );
 }

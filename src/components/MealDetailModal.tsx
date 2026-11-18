@@ -126,8 +126,8 @@ export const MealDetailModal: React.FC<{
           onClick={() => toggleFavorite(item.id)}
           className={`absolute top-4 left-4 z-20 p-2 rounded-full transition backdrop-blur-sm border ${
             isFavorite
-              ? 'bg-nova-red/80 border-nova-red text-white'
-              : 'bg-black/60 border-white/20 text-white hover:text-nova-red'
+              ? 'bg-nova-gold/80 border-nova-gold text-black'
+              : 'bg-black/60 border-white/20 text-white hover:text-nova-gold'
           }`}
         >
           <Heart className={`w-5 h-5 ${isFavorite ? 'fill-current' : ''}`} />

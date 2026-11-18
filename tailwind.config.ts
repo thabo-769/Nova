@@ -11,8 +11,6 @@ const config: Config = {
     extend: {
       colors: {
         nova: {
-          red: "#A30D18",
-          redDark: "#7E0911",
           gold: "#D4AF37",
           goldLight: "#EED789",
           goldDark: "#A8841B",
@@ -32,11 +30,9 @@ const config: Config = {
       boxShadow: {
         gold: "0 4px 20px -2px rgba(212, 175, 55, 0.25)",
         goldGlow: "0 0 25px rgba(212, 175, 55, 0.35)",
-        redGlow: "0 0 25px rgba(163, 13, 24, 0.4)",
       },
       backgroundImage: {
         "gold-gradient": "linear-gradient(135deg, #D4AF37 0%, #F5E08C 50%, #B88E1C 100%)",
-        "red-gradient": "linear-gradient(135deg, #A30D18 0%, #C41C29 100%)",
         "dark-gradient": "linear-gradient(180deg, #161616 0%, #101010 100%)",
       },
     },

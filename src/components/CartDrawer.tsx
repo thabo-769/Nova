@@ -70,7 +70,7 @@ export const CartDrawer: React.FC<{ onCheckout: () => void }> = ({ onCheckout })
                 <span className="text-nova-gold flex items-center">
                   <Sparkles className="w-3.5 h-3.5 mr-1" />
                   {remainingForFreeDelivery === 0
-                    ? '🎉 You unlocked FREE Delivery across Bulawayo!'
+                    ? 'You unlocked FREE Delivery across Bulawayo!'
                     : `Add $${remainingForFreeDelivery.toFixed(2)} more for FREE Delivery`}
                 </span>
                 <span className="text-gray-400">{Math.round(progressToFreeDelivery)}%</span>
@@ -127,7 +127,7 @@ export const CartDrawer: React.FC<{ onCheckout: () => void }> = ({ onCheckout })
                         </h4>
                         <button
                           onClick={() => removeFromCart(item.cartItemId)}
-                          className="text-gray-500 hover:text-red-400 transition ml-2"
+                          className="text-gray-500 hover:text-nova-gold transition ml-2"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -202,7 +202,7 @@ export const CartDrawer: React.FC<{ onCheckout: () => void }> = ({ onCheckout })
                     </span>
                     <button
                       onClick={removePromoCode}
-                      className="text-gray-400 hover:text-red-400 font-semibold"
+                      className="text-gray-400 hover:text-nova-gold font-semibold"
                     >
                       Remove
                     </button>
@@ -225,7 +225,7 @@ export const CartDrawer: React.FC<{ onCheckout: () => void }> = ({ onCheckout })
                   </form>
                 )}
                 {promoFeedback && !appliedPromo && (
-                  <p className={`text-[11px] mt-1.5 ${promoFeedback.success ? 'text-emerald-400' : 'text-red-400'}`}>
+                  <p className={`text-[11px] mt-1.5 ${promoFeedback.success ? 'text-emerald-400' : 'text-amber-400'}`}>
                     {promoFeedback.message}
                   </p>
                 )}

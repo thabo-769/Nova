@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useApp } from '@/context/AppContext';
-import { X, Mail, Lock, User, Shield, UtensilsCrossed, Sparkles } from 'lucide-react';
+import { X, Mail, Lock, User, Sparkles } from 'lucide-react';
 
 export const AuthModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   isOpen,
@@ -57,36 +57,16 @@ export const AuthModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
           <p className="text-[11px] text-gray-400 font-semibold uppercase tracking-wider mb-2 text-center">
             One-Click Demo Profiles:
           </p>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 gap-2">
             <button
               onClick={() => {
                 switchDemoUser('customer');
                 onClose();
               }}
-              className="px-2 py-1.5 rounded-lg bg-nova-gold/20 hover:bg-nova-gold hover:text-black text-nova-gold text-[11px] font-bold transition flex flex-col items-center justify-center"
+              className="px-3 py-2 rounded-lg bg-nova-gold/20 hover:bg-nova-gold hover:text-black text-nova-gold text-xs font-bold transition flex items-center justify-center"
             >
-              <User className="w-3.5 h-3.5 mb-0.5" />
-              <span>Customer</span>
-            </button>
-            <button
-              onClick={() => {
-                switchDemoUser('admin');
-                onClose();
-              }}
-              className="px-2 py-1.5 rounded-lg bg-nova-red/20 hover:bg-nova-red hover:text-white text-red-400 text-[11px] font-bold transition flex flex-col items-center justify-center"
-            >
-              <Shield className="w-3.5 h-3.5 mb-0.5" />
-              <span>Admin</span>
-            </button>
-            <button
-              onClick={() => {
-                switchDemoUser('kitchen');
-                onClose();
-              }}
-              className="px-2 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500 hover:text-black text-amber-400 text-[11px] font-bold transition flex flex-col items-center justify-center"
-            >
-              <UtensilsCrossed className="w-3.5 h-3.5 mb-0.5" />
-              <span>Kitchen</span>
+              <User className="w-4 h-4 mr-2" />
+              <span>Continue as demo customer</span>
             </button>
           </div>
         </div>

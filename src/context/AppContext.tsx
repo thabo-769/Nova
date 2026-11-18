@@ -33,10 +33,6 @@ import {
 } from '@/data/mockData';
 
 interface AppContextType {
-  // Theme
-  theme: 'dark' | 'light';
-  toggleTheme: () => void;
-
   // Auth & Profile
   user: UserProfile | null;
   switchDemoUser: (role: Role) => void;
@@ -45,7 +41,7 @@ interface AppContextType {
   toggleFavorite: (itemId: string) => void;
   addDeliveryAddress: (address: Omit<DeliveryAddress, 'id'>) => void;
 
-  // Menu State & Admin Actions
+  // Menu State & Management Actions
   menuItems: MenuItem[];
   categories: CategoryItem[];
   addMenuItem: (item: Omit<MenuItem, 'id'>) => void;
@@ -111,8 +107,6 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Theme state
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [mounted, setMounted] = useState(false);
 
   // User state
@@ -141,17 +135,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Load saved state from localStorage on client mount
   useEffect(() => {
     setMounted(true);
-    const savedTheme = localStorage.getItem('nova_theme') as 'dark' | 'light' | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      if (savedTheme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    } else {
-      document.documentElement.classList.add('dark');
-    }
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('nova_theme', 'dark');
 
     const savedCart = localStorage.getItem('nova_cart');
     if (savedCart) {
@@ -167,18 +152,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setUser(DEMO_USERS[savedUser]);
     }
   }, []);
-
-  // Sync theme changes to html class and localStorage
-  const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(nextTheme);
-    localStorage.setItem('nova_theme', nextTheme);
-    if (nextTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
 
   // Sync cart to localStorage
   useEffect(() => {
@@ -313,7 +286,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         },
       ];
     });
-    setIsCartOpen(true);
+    if (typeof window !== 'undefined' && window.innerWidth >= 768) setIsCartOpen(true);
   };
 
   const removeFromCart = (cartItemId: string) => {
@@ -576,8 +549,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   return (
     <AppContext.Provider
       value={{
-        theme,
-        toggleTheme,
         user,
         switchDemoUser,
         loginAs,

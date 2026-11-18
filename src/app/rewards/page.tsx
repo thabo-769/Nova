@@ -67,9 +67,6 @@ export default function RewardsPage() {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto space-y-3">
-        <span className="text-xs uppercase tracking-widest text-nova-gold font-semibold flex items-center justify-center">
-          <Sparkles className="w-3.5 h-3.5 mr-1 text-nova-gold" /> Nova Privé Club
-        </span>
         <h1 className="font-serif text-3xl sm:text-5xl font-bold text-white">
           Loyalty & Dining Rewards
         </h1>
@@ -139,12 +136,12 @@ export default function RewardsPage() {
           className={`p-4 rounded-xl text-xs font-semibold flex items-center justify-between ${
             feedback.success
               ? 'bg-emerald-950/50 border border-emerald-500/40 text-emerald-300'
-              : 'bg-red-950/50 border border-red-500/40 text-red-300'
+              : 'bg-amber-950/40 border border-amber-500/40 text-amber-300'
           }`}
         >
           <span>{feedback.message}</span>
-          <button onClick={() => setFeedback(null)} className="text-gray-400 hover:text-white">
-            ✕
+          <button onClick={() => setFeedback(null)} className="text-gray-400 hover:text-white text-xs">
+            Dismiss
           </button>
         </div>
       )}
@@ -153,10 +150,7 @@ export default function RewardsPage() {
       <div className="space-y-6">
         <div className="flex justify-between items-end">
           <div>
-            <span className="text-xs uppercase tracking-widest text-nova-gold font-bold">
-              Rewards Catalog
-            </span>
-            <h3 className="font-serif text-2xl font-bold text-white mt-0.5">
+            <h3 className="font-serif text-2xl font-bold text-white">
               Redeem Your Points
             </h3>
           </div>

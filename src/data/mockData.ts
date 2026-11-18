@@ -476,32 +476,6 @@ export const DEMO_USERS: Record<string, UserProfile> = {
     ],
     favoriteItemIds: ['item-1', 'item-3', 'item-10'],
     createdAt: '2024-01-15T10:00:00Z'
-  },
-  admin: {
-    id: 'usr-admin-ndlovu',
-    name: 'Sipho Ndlovu (General Manager)',
-    email: 'admin@novadiner.co.zw',
-    phone: '+263 71 987 6543',
-    role: 'admin',
-    photoURL: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop',
-    loyaltyPoints: 3400,
-    loyaltyTier: 'Platinum',
-    savedAddresses: [],
-    favoriteItemIds: [],
-    createdAt: '2023-08-01T08:00:00Z'
-  },
-  kitchen: {
-    id: 'usr-chef-sibanda',
-    name: 'Chef Dumisani Sibanda',
-    email: 'kitchen@novadiner.co.zw',
-    phone: '+263 73 555 4321',
-    role: 'kitchen',
-    photoURL: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=300&auto=format&fit=crop',
-    loyaltyPoints: 0,
-    loyaltyTier: 'Bronze',
-    savedAddresses: [],
-    favoriteItemIds: [],
-    createdAt: '2023-09-10T08:00:00Z'
   }
 };
 

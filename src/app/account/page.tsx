@@ -136,7 +136,7 @@ export default function AccountPage() {
 
           <button
             onClick={logout}
-            className="p-3 rounded-xl bg-red-950/30 hover:bg-nova-red text-red-400 hover:text-white border border-red-500/30 transition flex items-center space-x-2 text-xs font-bold"
+            className="p-3 rounded-xl bg-nova-gold/10 hover:bg-nova-gold text-nova-gold hover:text-black border border-nova-gold/30 transition flex items-center space-x-2 text-xs font-bold"
           >
             <LogOut className="w-4 h-4" />
             <span className="hidden sm:inline">Sign Out</span>
@@ -248,7 +248,7 @@ export default function AccountPage() {
                       {res.status}
                     </span>
                     {res.dateNightPackageName && (
-                      <span className="px-2 py-0.5 rounded-full bg-nova-red/30 text-red-300 text-[11px] font-bold">
+                      <span className="px-2 py-0.5 rounded-full bg-nova-gold/20 text-nova-gold text-[11px] font-bold">
                         Date Night Privé
                       </span>
                     )}
@@ -295,7 +295,7 @@ export default function AccountPage() {
                   </div>
                   <button
                     onClick={() => toggleFavorite(item.id)}
-                    className="p-2 text-nova-red hover:bg-white/5 rounded-lg"
+                    className="p-2 text-nova-gold hover:bg-white/5 rounded-lg"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>

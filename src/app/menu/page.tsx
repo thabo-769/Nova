@@ -6,19 +6,22 @@ import { useApp } from '@/context/AppContext';
 import { MenuCard } from '@/components/MenuCard';
 import { MealDetailModal } from '@/components/MealDetailModal';
 import { MenuItem, FoodCategory } from '@/types';
-import { Search, SlidersHorizontal, Utensils, Sparkles, Filter } from 'lucide-react';
+import { Search, SlidersHorizontal, Utensils, Sparkles, Filter, Plus } from 'lucide-react';
+import Link from 'next/link';
+import { FoodArt, ScreenHeader } from '@/components/MobileNav';
 
 function MenuContent() {
   const searchParams = useSearchParams();
   const initialCategory = (searchParams.get('category') as FoodCategory) || 'all';
   const initialQuery = searchParams.get('q') || '';
 
-  const { menuItems, categories } = useApp();
+  const { menuItems, categories, addToCart } = useApp();
   const [selectedCategory, setSelectedCategory] = useState<FoodCategory>(initialCategory);
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [dietaryFilter, setDietaryFilter] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc' | 'rating'>('featured');
   const [selectedMeal, setSelectedMeal] = useState<MenuItem | null>(null);
+  const [mobileCategory, setMobileCategory] = useState('All');
 
   // Filtered and sorted meals
   const filteredMeals = useMemo(() => {
@@ -49,13 +52,17 @@ function MenuContent() {
     });
   }, [menuItems, selectedCategory, dietaryFilter, searchQuery, sortBy]);
 
+  const mobileCategories = ['All', 'Starters', 'Mains', 'Desserts', 'Drinks'];
+  const mobileMeals = filteredMeals.filter((item) => mobileCategory === 'All' ||
+    item.categoryId.toLowerCase().includes(mobileCategory === 'Mains' ? 'main' : mobileCategory.toLowerCase().replace(/s$/, '')));
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <><div className="mobile-page mobile-menu-page"><ScreenHeader title="Menu" back right={<Link href="/cart" aria-label="Open cart"><Search size={21}/></Link>}/>
+      <div className="mobile-pills">{mobileCategories.map((category)=><button key={category} className={mobileCategory===category?'selected':''} onClick={()=>setMobileCategory(category)}>{category}</button>)}</div>
+      <div className="mobile-menu-list">{mobileMeals.map((item,index)=><article className="mobile-menu-card" key={item.id}><FoodArt kind={index%4===1?'pasta':index%4===2?'burger':index%4===3?'pizza':'steak'} src={item.image} alt={item.name}/><div><strong>{item.name}</strong><p>{item.description}</p><b>${item.price.toFixed(2)}</b></div><button aria-label={`Add ${item.name} to cart`} onClick={()=>addToCart(item)}><Plus size={22}/></button></article>)}</div>
+      <Link className="mobile-cart-fab" href="/cart">View Cart</Link>
+    </div><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 desktop-menu">
       {/* Page Header */}
       <div className="text-center max-w-2xl mx-auto space-y-3">
-        <span className="text-xs uppercase tracking-widest text-nova-gold font-semibold flex items-center justify-center">
-          <Sparkles className="w-3.5 h-3.5 mr-1 text-nova-gold" /> Nova Diner Bulawayo
-        </span>
         <h1 className="font-serif text-3xl sm:text-5xl font-bold text-white">
           Digital Culinary Menu
         </h1>
@@ -182,7 +189,7 @@ function MenuContent() {
         isOpen={!!selectedMeal}
         onClose={() => setSelectedMeal(null)}
       />
-    </div>
+    </div></>
   );
 }
 

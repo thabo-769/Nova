@@ -61,7 +61,7 @@ function TrackOrderContent() {
     },
     {
       status: 'preparing',
-      label: 'Kitchen Cooking',
+      label: 'Preparing',
       desc: 'Executive chef is on the grill',
       icon: ChefHat,
     },
@@ -100,9 +100,6 @@ function TrackOrderContent() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
       {/* Search Order Bar */}
       <div className="text-center max-w-xl mx-auto space-y-3">
-        <span className="text-xs uppercase tracking-widest text-nova-gold font-semibold flex items-center justify-center">
-          <Sparkles className="w-3.5 h-3.5 mr-1 text-nova-gold" /> Live Order Tracking
-        </span>
         <h1 className="font-serif text-3xl sm:text-4xl font-bold text-white">
           Track Your Culinary Order
         </h1>
@@ -149,11 +146,11 @@ function TrackOrderContent() {
                   currentOrder.status === 'delivered'
                     ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
                     : currentOrder.status === 'cancelled'
-                    ? 'bg-red-500/20 text-red-400 border border-red-500/40'
+                    ? 'bg-gray-500/20 text-gray-300 border border-gray-500/40'
                     : 'bg-nova-gold/20 text-nova-gold border border-nova-gold/40 animate-pulse'
                 }`}
               >
-                ● {currentOrder.status.toUpperCase()}
+                {currentOrder.status.toUpperCase()}
               </span>
             </div>
           </div>

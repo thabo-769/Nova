@@ -11,15 +11,21 @@ import {
   Clock,
   Phone,
   User,
-  CreditCard,
   Banknote,
-  Smartphone,
   ShieldCheck,
   CheckCircle,
   ArrowRight,
   Loader2,
   Sparkles,
 } from 'lucide-react';
+
+function PaymentBrand({ method }: { method: PaymentMethod }) {
+  if (method === 'ecocash') return <span aria-hidden="true" className="payment-brand-logo flex h-7 items-center text-emerald-400"><span className="mr-1.5 grid h-6 w-6 place-items-center rounded-md border-2 border-current font-black">e</span><span className="text-sm font-black tracking-tight">EcoCash</span></span>;
+  if (method === 'innbucks') return <span aria-hidden="true" className="payment-brand-logo flex h-7 items-center text-amber-400"><span className="payment-brand-mark mr-1.5 grid h-6 w-6 place-items-center rounded-full bg-neutral-950 text-xs font-black text-amber-400">i</span><span className="text-sm font-black tracking-tight">InnBucks</span></span>;
+  if (method === 'onemoney') return <span aria-hidden="true" className="flex h-7 items-center text-blue-400"><span className="mr-1.5 text-2xl font-black leading-none">1</span><span className="text-sm font-black tracking-tight">OneMoney</span></span>;
+  if (method === 'card') return <span aria-hidden="true" className="payment-brand-logo flex h-7 items-center gap-2"><span className="text-sm font-black italic text-blue-400">VISA</span><span className="flex"><i className="payment-brand-mark h-4 w-4 rounded-full bg-amber-600"/><i className="payment-brand-mark -ml-1.5 h-4 w-4 rounded-full bg-amber-300/90"/></span></span>;
+  return <Banknote aria-hidden="true" className="h-6 w-6 text-gray-300" />;
+}
 
 export const CheckoutModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   isOpen,
@@ -114,7 +120,7 @@ export const CheckoutModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
           particleCount: 80,
           spread: 70,
           origin: { y: 0.6 },
-          colors: ['#D4AF37', '#A30D18', '#FFFFFF'],
+          colors: ['#D4AF37', '#101010', '#FFFFFF'],
         });
       } catch (e) {
         console.log(e);
@@ -344,13 +350,12 @@ export const CheckoutModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
             {/* Payment Method Selector */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {[
-                { id: 'ecocash', label: 'EcoCash', icon: Smartphone, color: 'text-emerald-400' },
-                { id: 'innbucks', label: 'InnBucks', icon: Smartphone, color: 'text-amber-400' },
-                { id: 'onemoney', label: 'OneMoney', icon: Smartphone, color: 'text-blue-400' },
-                { id: 'card', label: 'Bank Card', icon: CreditCard, color: 'text-purple-400' },
-                { id: 'cash', label: 'Cash on Arrival', icon: Banknote, color: 'text-gray-300' },
+                { id: 'ecocash', label: 'EcoCash' },
+                { id: 'innbucks', label: 'InnBucks' },
+                { id: 'onemoney', label: 'OneMoney' },
+                { id: 'card', label: 'Bank Card' },
+                { id: 'cash', label: 'Cash on Arrival' },
               ].map((m) => {
-                const Icon = m.icon;
                 const isSelected = paymentMethod === m.id;
                 return (
                   <button
@@ -363,7 +368,7 @@ export const CheckoutModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                         : 'border-white/10 bg-white/5 hover:border-white/20'
                     }`}
                   >
-                    <Icon className={`w-5 h-5 mb-2 ${m.color}`} />
+                    <PaymentBrand method={m.id as PaymentMethod} />
                     <span className="text-xs font-bold text-gray-200">{m.label}</span>
                   </button>
                 );
@@ -456,8 +461,8 @@ export const CheckoutModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
                 <div className="text-xs text-gray-300">
                   <p>
                     {orderType === 'delivery'
-                      ? '💵 Pay with clean USD or ZiG notes directly to the Nova Diner delivery courier upon arrival.'
-                      : '💵 Pay cash at our Bulawayo diner counter upon collection.'}
+                      ? 'Pay with clean USD or ZiG notes directly to the Nova Diner delivery courier upon arrival.'
+                      : 'Pay cash at our Bulawayo diner counter upon collection.'}
                   </p>
                 </div>
               )}
@@ -518,7 +523,7 @@ export const CheckoutModal: React.FC<{ isOpen: boolean; onClose: () => void }> =
               Securing Your Payment Handshake...
             </h3>
             <p className="text-xs text-gray-400 max-w-sm">
-              Communicating with payment gateway and dispatching ticket directly to Nova Diner Bulawayo kitchen.
+              Communicating with payment gateway and sending your order to Nova Diner Bulawayo for preparation.
             </p>
           </div>
         )}

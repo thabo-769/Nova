@@ -6,28 +6,22 @@ import { usePathname } from 'next/navigation';
 import { useApp } from '@/context/AppContext';
 import {
   ShoppingBag,
-  Moon,
-  Sun,
   Menu as MenuIcon,
   X,
   User,
   Heart,
   Calendar,
   Sparkles,
-  Shield,
-  UtensilsCrossed,
   LogOut,
   ChevronDown
 } from 'lucide-react';
 
 export const Navbar: React.FC<{ onOpenAuth: () => void }> = ({ onOpenAuth }) => {
   const pathname = usePathname();
+  const isHome = pathname === '/';
   const {
-    theme,
-    toggleTheme,
     user,
     logout,
-    switchDemoUser,
     cartCount,
     total,
     setIsCartOpen
@@ -46,54 +40,7 @@ export const Navbar: React.FC<{ onOpenAuth: () => void }> = ({ onOpenAuth }) => 
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full glass-panel border-b border-nova-gold/20 transition-all">
-      {/* Top micro-bar for Zimbabwe location & quick role switcher */}
-      <div className="bg-nova-black/95 dark:bg-black/80 text-xs text-gray-300 py-1 px-4 border-b border-nova-gold/10 hidden md:flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <span className="flex items-center text-nova-gold font-medium">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 mr-2 animate-pulse"></span>
-            Nova Diner Bulawayo: Open Today 08:00 – 23:00
-          </span>
-          <span className="text-gray-400">|</span>
-          <span className="text-gray-400">12th Ave & R. Mugabe Way, Bulawayo</span>
-        </div>
-
-        {/* Quick Demo Role Switcher for instant testing */}
-        <div className="flex items-center space-x-2">
-          <span className="text-gray-400 text-[11px]">Role view:</span>
-          <button
-            onClick={() => switchDemoUser('customer')}
-            className={`px-2 py-0.5 rounded text-[11px] font-medium transition ${
-              user?.role === 'customer'
-                ? 'bg-nova-gold text-nova-black'
-                : 'bg-white/5 text-gray-400 hover:text-white'
-            }`}
-          >
-            Customer
-          </button>
-          <button
-            onClick={() => switchDemoUser('admin')}
-            className={`px-2 py-0.5 rounded text-[11px] font-medium transition flex items-center space-x-1 ${
-              user?.role === 'admin'
-                ? 'bg-nova-red text-white'
-                : 'bg-white/5 text-gray-400 hover:text-white'
-            }`}
-          >
-            <Shield className="w-3 h-3 mr-0.5" /> Admin
-          </button>
-          <button
-            onClick={() => switchDemoUser('kitchen')}
-            className={`px-2 py-0.5 rounded text-[11px] font-medium transition flex items-center space-x-1 ${
-              user?.role === 'kitchen'
-                ? 'bg-amber-600 text-white'
-                : 'bg-white/5 text-gray-400 hover:text-white'
-            }`}
-          >
-            <UtensilsCrossed className="w-3 h-3 mr-0.5" /> Kitchen
-          </button>
-        </div>
-      </div>
-
+    <header className={isHome ? 'absolute inset-x-0 top-0 z-40 w-full bg-transparent border-0 shadow-none' : 'sticky top-0 z-40 w-full glass-panel border-b border-nova-gold/20 transition-all'}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo Branding */}
@@ -138,36 +85,10 @@ export const Navbar: React.FC<{ onOpenAuth: () => void }> = ({ onOpenAuth }) => 
               );
             })}
 
-            {/* Admin or Kitchen direct shortcut if active */}
-            {user?.role === 'admin' && (
-              <Link
-                href="/admin"
-                className="px-3 py-1 text-xs font-semibold rounded-full bg-nova-red/20 border border-nova-red text-red-400 hover:bg-nova-red hover:text-white transition"
-              >
-                Admin Panel
-              </Link>
-            )}
-            {user?.role === 'kitchen' && (
-              <Link
-                href="/kitchen"
-                className="px-3 py-1 text-xs font-semibold rounded-full bg-amber-500/20 border border-amber-500 text-amber-400 hover:bg-amber-500 hover:text-black transition"
-              >
-                Kitchen KDS
-              </Link>
-            )}
           </nav>
 
           {/* Right Action Icons */}
           <div className="flex items-center space-x-4">
-            {/* Theme Toggle Button */}
-            <button
-              onClick={toggleTheme}
-              aria-label="Toggle Theme"
-              className="p-2 rounded-full text-gray-400 hover:text-nova-gold hover:bg-white/5 transition"
-            >
-              {theme === 'dark' ? <Sun className="w-5 h-5 text-nova-gold" /> : <Moon className="w-5 h-5 text-neutral-800" />}
-            </button>
-
             {/* Cart Trigger */}
             <button
               onClick={() => setIsCartOpen(true)}
@@ -176,7 +97,7 @@ export const Navbar: React.FC<{ onOpenAuth: () => void }> = ({ onOpenAuth }) => 
             >
               <ShoppingBag className="w-6 h-6 text-nova-gold group-hover:scale-105 transition" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-nova-red text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-lg border border-nova-gold/50 animate-bounce">
+                <span className="absolute -top-1 -right-1 bg-nova-gold text-black text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-lg border border-black/20 animate-bounce">
                   {cartCount}
                 </span>
               )}
@@ -237,27 +158,6 @@ export const Navbar: React.FC<{ onOpenAuth: () => void }> = ({ onOpenAuth }) => 
                         Nova Loyalty Rewards
                       </Link>
 
-                      {user.role === 'admin' && (
-                        <Link
-                          href="/admin"
-                          onClick={() => setUserDropdownOpen(false)}
-                          className="flex items-center px-4 py-2.5 text-red-400 hover:bg-nova-red/10 transition"
-                        >
-                          <Shield className="w-4 h-4 mr-3 text-nova-red" />
-                          Restaurant Management
-                        </Link>
-                      )}
-
-                      {user.role === 'kitchen' && (
-                        <Link
-                          href="/kitchen"
-                          onClick={() => setUserDropdownOpen(false)}
-                          className="flex items-center px-4 py-2.5 text-amber-400 hover:bg-amber-500/10 transition"
-                        >
-                          <UtensilsCrossed className="w-4 h-4 mr-3 text-amber-400" />
-                          Kitchen Display (KDS)
-                        </Link>
-                      )}
 
                       <div className="border-t border-nova-gold/10 mt-1 pt-1">
                         <button
@@ -265,7 +165,7 @@ export const Navbar: React.FC<{ onOpenAuth: () => void }> = ({ onOpenAuth }) => 
                             logout();
                             setUserDropdownOpen(false);
                           }}
-                          className="w-full flex items-center px-4 py-2 text-left text-red-400 hover:bg-nova-red/10 transition"
+                          className="w-full flex items-center px-4 py-2 text-left text-nova-gold hover:bg-nova-gold/10 transition"
                         >
                           <LogOut className="w-4 h-4 mr-3" />
                           Sign Out
@@ -308,24 +208,6 @@ export const Navbar: React.FC<{ onOpenAuth: () => void }> = ({ onOpenAuth }) => 
               {link.label}
             </Link>
           ))}
-          {user?.role === 'admin' && (
-            <Link
-              href="/admin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-base font-semibold text-nova-red bg-nova-red/10"
-            >
-              Admin Dashboard
-            </Link>
-          )}
-          {user?.role === 'kitchen' && (
-            <Link
-              href="/kitchen"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-base font-semibold text-amber-400 bg-amber-500/10"
-            >
-              Kitchen Display (KDS)
-            </Link>
-          )}
         </div>
       )}
     </header>

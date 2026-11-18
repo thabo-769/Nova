@@ -4,7 +4,7 @@ An international-grade, luxury restaurant platform built with **Next.js 14**, **
 
 ---
 
-## 🍽️ Key Application Features
+## Key Application Features
 
 ### 1. Customer Digital Experience
 - **Interactive Digital Food Menu (`/menu`)**:
@@ -26,7 +26,7 @@ An international-grade, luxury restaurant platform built with **Next.js 14**, **
   - 5-stage real-time stepper:
     1. *Order Received*
     2. *Confirmed*
-    3. *Kitchen Cooking*
+    3. *Preparing*
     4. *Dispatched / Ready for Collection*
     5. *Delivered / Collected*
   - Live timeline audit log with timestamps.
@@ -45,26 +45,12 @@ An international-grade, luxury restaurant platform built with **Next.js 14**, **
 - **Bank Cards**: Visa, Mastercard, and Zimswitch.
 - **Cash on Delivery or Collection**: Clear USD and ZiG cash settlement options.
 
-### 3. Kitchen Display System (KDS) (`/kitchen`)
-- Dedicated full-screen interface for kitchen chefs and expo staff.
-- Active order cards with portion sizes, add-ons, and customer preparation notes.
-- Synthesized audio chime alert for ticket updates.
-- One-click workflow: *Start Cooking* ➔ *Mark Ready for Pass* ➔ *Handed Over*.
-
-### 4. Admin Management Suite (`/admin`)
-- **Executive Overview**: Total revenue metrics, active orders, upcoming table reservations, and sales trends.
-- **Order Management**: Real-time order board, status transitions, fulfillment details.
-- **Reservation Management**: Table allocation, approve or decline guest bookings, special occasion requests.
-- **Menu Management**: Add new meals, edit descriptions, change pricing, and toggle stock availability (*In Stock* vs *Sold Out*).
-- **Marketing & Promotions**: Create promo voucher codes with spend thresholds and discounts.
-
 ---
 
-## 🎨 Luxury Brand Palette
+## Luxury Brand Palette
 
 | Color | Hex | Purpose |
 | :--- | :--- | :--- |
-| **Deep Red** | `#A30D18` | Primary CTA buttons, romance badges, urgent alerts |
 | **Luxury Gold** | `#D4AF37` | Monogram insignia, shimmer headlines, price tags |
 | **Rich Black** | `#101010` | Dark mode background, luxury contrast |
 | **Warm Ivory** | `#F8F5EF` | Light mode background surfaces |
@@ -72,7 +58,7 @@ An international-grade, luxury restaurant platform built with **Next.js 14**, **
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Install Dependencies
 ```bash
@@ -99,7 +85,7 @@ npm run start
 
 ---
 
-## 🔒 Firebase Infrastructure
+## Firebase Infrastructure
 
 - **`firebase.json`**: Deployment settings for Firestore, Storage, Hosting, and Cloud Functions.
 - **`firestore.rules`**: Production security rules enforcing owner-only profile access, public read / admin-only writes on menu and promotions, and staff role verification for orders and reservations.
