@@ -61,18 +61,19 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(212,175,55,0.08)_0%,_transparent_70%)]" />
         </div>
 
-        <div className="relative z-10 min-h-screen max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20 flex flex-col items-center justify-center">
+        <div className="relative z-10 min-h-screen w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 text-left py-20 flex flex-col items-start justify-center">
           {/* Main Headline */}
-          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-[1.05] mb-6">
+          <p className="relative -top-6 text-xs sm:text-sm font-semibold uppercase tracking-[.32em] text-nova-gold mb-5">Welcome to Nova Diner</p>
+          <h1 className="relative -top-6 font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-[1.05] mb-6 max-w-3xl">
             A Taste of <span className="gold-shimmer">Elegance</span>
           </h1>
 
-          <p className="max-w-xl mx-auto text-base sm:text-lg text-gray-300 font-light leading-relaxed mb-10">
+          <p className="relative -top-6 max-w-xl text-base sm:text-lg text-gray-300 font-light leading-relaxed mb-10">
             Charcoal-fired flavor, made for sharing.
           </p>
 
           {/* Primary Action Buttons */}
-          <div className="absolute bottom-16 left-1/2 -translate-x-1/2 mt-0 w-full max-w-md px-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="absolute bottom-16 left-6 sm:left-10 lg:left-14 mt-0 w-full max-w-md px-0 flex flex-col sm:flex-row items-start justify-start gap-4">
             <Link
               href="/menu"
               className="order-cta w-full sm:w-auto px-8 py-4 rounded-xl bg-black text-nova-gold border border-nova-gold font-bold text-sm tracking-wider uppercase hover:shadow-gold transition transform hover:-translate-y-0.5 flex items-center justify-center space-x-2"

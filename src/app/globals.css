@@ -198,17 +198,17 @@ html:not(.dark) .glass-panel {
   .mobile-head-actions svg { width:22px;height:22px; }
   .mobile-cart-link i { position:absolute;right:-2px;top:-2px;min-width:17px;height:17px;padding:0 4px;border-radius:12px;background:#f8b928;color:#17120a;font-style:normal;font-size:10px;font-weight:800;text-align:center;line-height:17px; }
   .mobile-home .mobile-hero-card { height:370px;display:block;position:relative;border:0;border-radius:24px;background:#100e0b;margin:0 -18px; }
-  .mobile-home .mobile-hero-card>.food-art { position:absolute;inset:0;border-radius:0 0 24px 24px; }
+  .mobile-home .mobile-hero-card>.food-art { position:absolute;inset:0;z-index:0;border-radius:0 0 24px 24px; }
   .mobile-home .mobile-hero-card>.food-art img { object-position:center; }
-  .mobile-hero-shade { position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.93) 0%,rgba(0,0,0,.74) 42%,rgba(0,0,0,.06) 100%),linear-gradient(0deg,rgba(0,0,0,.7),transparent 45%); }
-  .mobile-hero-copy { position:absolute;left:24px;top:38px;width:70%; }
+  .mobile-hero-shade { position:absolute;z-index:1;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.43) 48%,rgba(0,0,0,.03) 100%),linear-gradient(0deg,rgba(0,0,0,.55),transparent 52%); }
+  .mobile-hero-copy { position:absolute;z-index:2;left:24px;top:34px;width:72%;text-align:left; }
   .mobile-eyebrow { color:#ddd8cf;font-size:10px;letter-spacing:3px;font-weight:700; }
   .mobile-hero-copy h1 { margin:19px 0 10px;font-family:var(--font-sans);font-size:42px;line-height:.98;letter-spacing:-1.5px;font-weight:750; }
   .mobile-hero-copy h1 em { color:#f8b928;font-style:normal;font-family:var(--font-serif);font-size:48px;letter-spacing:-1px; }
   .mobile-hero-copy p { color:#d2d0cd;font-size:16px;line-height:1.35;margin:15px 0 20px; }
   .mobile-home .mobile-hero-actions { display:none; }
   .mobile-home .mobile-hero-copy .mobile-cta { width:max-content;min-width:164px;padding:0 22px;border-radius:28px;background:#f8b928;color:#130f06;font-size:15px; }
-  .mobile-hero-dots { position:absolute;bottom:17px;left:0;right:0;display:flex;justify-content:center;gap:9px; }
+  .mobile-hero-dots { position:absolute;z-index:2;bottom:17px;left:0;right:0;display:flex;justify-content:center;gap:9px; }
   .mobile-hero-dots i { width:12px;height:12px;border-radius:50%;background:#6d6d6b; }.mobile-hero-dots i:first-child { background:#f8b928; }
   .mobile-home .mobile-shortcuts { gap:9px;margin:15px 0 30px; }
   .mobile-home .mobile-shortcuts a { min-height:91px;border-radius:20px;background:linear-gradient(145deg,#151515,#080808);border-color:#292929;color:#f8f7f4;font-size:13px; }
