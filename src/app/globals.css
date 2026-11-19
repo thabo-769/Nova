@@ -25,6 +25,7 @@
   .about-photos .food-art.has-photo:after { content:''; background:none; }
 }
 
+
 @media (max-width: 767px) {
   html:not(.dark) body,
   html:not(.dark) .min-h-screen,
@@ -184,3 +185,65 @@ html:not(.dark) .glass-panel {
   .mobile-reservation .reservation-success { color:#d5f6df; background:rgba(28,112,66,.2); border:1px solid rgba(65,189,132,.35); }
   .mobile-reservation .mobile-cta:disabled { opacity:.72; }
 }
+
+/* Editorial, dark-gold mobile home inspired by the Nova Diner reference. */
+@media (max-width: 767px) {
+  .mobile-home { padding:0 18px 22px; background:#050505; color:#f8f7f4; }
+  html:not(.dark) .mobile-home { background:#050505!important; color:#f8f7f4!important; }
+  .mobile-home .mobile-brandbar { height:72px; gap:12px; }
+  .mobile-home .mobile-brand { display:flex; align-items:center; gap:12px; font-size:22px; letter-spacing:1px; }
+  .mobile-home .nova-logo { width:36px; height:36px; color:#f8b928; }
+  .mobile-head-actions { display:flex; gap:10px; }
+  .mobile-head-actions a { width:46px;height:46px;border:1px solid #373432;border-radius:50%;display:grid;place-items:center;color:#fff;position:relative; }
+  .mobile-head-actions svg { width:22px;height:22px; }
+  .mobile-cart-link i { position:absolute;right:-2px;top:-2px;min-width:17px;height:17px;padding:0 4px;border-radius:12px;background:#f8b928;color:#17120a;font-style:normal;font-size:10px;font-weight:800;text-align:center;line-height:17px; }
+  .mobile-home .mobile-hero-card { height:370px;display:block;position:relative;border:0;border-radius:24px;background:#100e0b;margin:0 -18px; }
+  .mobile-home .mobile-hero-card>.food-art { position:absolute;inset:0;border-radius:0 0 24px 24px; }
+  .mobile-home .mobile-hero-card>.food-art img { object-position:center; }
+  .mobile-hero-shade { position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.93) 0%,rgba(0,0,0,.74) 42%,rgba(0,0,0,.06) 100%),linear-gradient(0deg,rgba(0,0,0,.7),transparent 45%); }
+  .mobile-hero-copy { position:absolute;left:24px;top:38px;width:70%; }
+  .mobile-eyebrow { color:#ddd8cf;font-size:10px;letter-spacing:3px;font-weight:700; }
+  .mobile-hero-copy h1 { margin:19px 0 10px;font-family:var(--font-sans);font-size:42px;line-height:.98;letter-spacing:-1.5px;font-weight:750; }
+  .mobile-hero-copy h1 em { color:#f8b928;font-style:normal;font-family:var(--font-serif);font-size:48px;letter-spacing:-1px; }
+  .mobile-hero-copy p { color:#d2d0cd;font-size:16px;line-height:1.35;margin:15px 0 20px; }
+  .mobile-home .mobile-hero-actions { display:none; }
+  .mobile-home .mobile-hero-copy .mobile-cta { width:max-content;min-width:164px;padding:0 22px;border-radius:28px;background:#f8b928;color:#130f06;font-size:15px; }
+  .mobile-hero-dots { position:absolute;bottom:17px;left:0;right:0;display:flex;justify-content:center;gap:9px; }
+  .mobile-hero-dots i { width:12px;height:12px;border-radius:50%;background:#6d6d6b; }.mobile-hero-dots i:first-child { background:#f8b928; }
+  .mobile-home .mobile-shortcuts { gap:9px;margin:15px 0 30px; }
+  .mobile-home .mobile-shortcuts a { min-height:91px;border-radius:20px;background:linear-gradient(145deg,#151515,#080808);border-color:#292929;color:#f8f7f4;font-size:13px; }
+  .mobile-home .mobile-shortcuts a svg { color:#f8b928;width:27px;height:27px; }
+  .mobile-home .mobile-section { margin-bottom:25px; }
+  .mobile-home .mobile-section-title { margin-bottom:14px; }
+  .mobile-home .mobile-section-title h2 { font-size:23px;font-weight:750;letter-spacing:-.5px; }
+  .mobile-home .mobile-section-title h2:after { content:'';display:block;width:44px;height:3px;background:#f8b928;margin-top:9px; }
+  .mobile-home .mobile-section-title a { color:#f7f5ef;display:flex;align-items:center;gap:4px;font-size:13px;font-weight:500; }
+  .mobile-home .mobile-section-title a svg { color:#f8b928; }
+  .mobile-home .mobile-feature-grid { gap:11px; }
+  .mobile-home .mobile-feature-card { padding:0 0 13px;border-radius:20px;background:#0b0b0b;border-color:#303030;overflow:hidden; }
+  .mobile-home .mobile-feature-card .food-art { height:135px;margin:0 0 10px;border-radius:19px 19px 0 0; }
+  .mobile-home .mobile-feature-card strong { padding:0 10px;font-size:13px;white-space:normal;min-height:34px;line-height:1.25; }
+  .mobile-home .mobile-feature-card>b { padding:0 10px;margin-top:5px;font-size:17px; }
+  .mobile-home .mobile-feature-card button { width:40px;height:40px;right:8px;bottom:9px;background:#f8b928; }
+  .mobile-home .mobile-feature-card button svg { width:21px;height:21px; }
+  .mobile-home .mobile-about-link { position:relative;min-height:145px;margin:27px 0 0;padding:20px 17px;display:flex;align-items:center;gap:15px;overflow:hidden;border:1px solid #36302a;border-radius:23px;background:#0c0b09;color:white; }
+  .mobile-home .mobile-about-link>.food-art { position:absolute;inset:0 0 0 45%;height:auto;border-radius:0;opacity:.76; }
+  .mobile-home .mobile-about-link>.food-art:after { content:'';position:absolute;inset:0;background:linear-gradient(90deg,#0c0b09 0%,rgba(12,11,9,.8) 12%,rgba(12,11,9,.05) 100%); }
+  .mobile-home .promo-chef,.mobile-home .mobile-about-link>span:nth-child(2) { z-index:1; }
+  .mobile-home .promo-chef { color:#f8b928; }.mobile-home .promo-chef svg { width:43px;height:43px;stroke-width:1.5; }
+  .mobile-home .mobile-about-link>span:nth-child(2) { display:flex;flex-direction:column;gap:4px; }
+  .mobile-home .mobile-about-link strong { font-size:19px;line-height:1.12; }
+  .mobile-home .mobile-about-link small { color:#c3beb5;font-size:13px; }
+  .mobile-home .mobile-about-link b { margin-top:5px;display:flex;align-items:center;gap:5px;width:max-content;padding:6px 13px;border:1px solid #f4eee3;border-radius:22px;font-size:12px; }
+  .mobile-home .mobile-about-link b svg { color:#f8b928; }
+  .mobile-bottom-nav { left:0;right:0;height:88px;padding:9px 7px 13px;border:1px solid #282624;border-radius:30px 30px 0 0;background:rgba(10,10,10,.97);backdrop-filter:blur(14px); }
+  html:not(.dark) .mobile-bottom-nav { background:rgba(10,10,10,.97)!important;border-color:#282624!important; }
+  .mobile-bottom-nav a { font-size:11px; }.mobile-bottom-nav a svg { width:23px;height:23px; }
+}
+
+@media (max-width: 767px) {
+  .mobile-reservation .reservation-cover { height:220px; margin:0 0 2px; overflow:hidden; border:1px solid rgba(248,185,40,.25); border-radius:22px; background:#17120c; }
+  .mobile-reservation .reservation-cover img { display:block; width:100%; height:100%; object-fit:cover; object-position:center 58%; }
+  .mobile-reservation .reservation-cover span { position:absolute; inset:0; pointer-events:none; background:linear-gradient(0deg,rgba(0,0,0,.28),rgba(0,0,0,.03)); }
+}
+

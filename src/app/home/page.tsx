@@ -21,18 +21,18 @@ import {
   UtensilsCrossed,
   Gift
 } from 'lucide-react';
-import { BookOpen, Coffee, Plus } from 'lucide-react';
+import { BookOpen, Coffee, Plus, Search, ShoppingCart, ChefHat } from 'lucide-react';
 import { FoodArt, NovaLogo } from '@/components/MobileNav';
 
 function MobileHome() {
-  const { menuItems, addToCart } = useApp();
+  const { menuItems, addToCart, cartCount } = useApp();
   const featured = menuItems.filter((item) => item.featured || item.popular).slice(0, 2);
   return <div className="mobile-page mobile-home">
-    <div className="mobile-brandbar"><Link href="/" className="mobile-brand"><NovaLogo/> NOVA <b>DINER</b></Link></div>
-    <section className="mobile-hero-card"><div><h1>A Taste<br/>of Elegance</h1><p>Charcoal-fired flavor, made for sharing.</p><div className="mobile-hero-actions"><Link href="/menu" className="mobile-cta small order-cta">Order Now</Link><Link href="/reservations" className="mobile-cta small secondary">Reserve Table</Link></div></div><FoodArt kind="steak" src={featured[0]?.image} alt={featured[0]?.name || 'Grilled steak'} /></section>
+    <div className="mobile-brandbar"><Link href="/" className="mobile-brand"><NovaLogo/> <span>NOVA <b>DINER</b></span></Link><div className="mobile-head-actions"><Link href="/menu" aria-label="Search menu"><Search/></Link><Link href="/cart" aria-label={`Cart, ${cartCount} items`} className="mobile-cart-link"><ShoppingCart/>{cartCount > 0 && <i>{cartCount}</i>}</Link></div></div>
+    <section className="mobile-hero-card"><FoodArt kind="steak" src={featured[0]?.image} alt={featured[0]?.name || 'Grilled steak'} /><div className="mobile-hero-shade"/><div className="mobile-hero-copy"><span className="mobile-eyebrow">WELCOME TO NOVA DINER</span><h1>A Taste of<br/><em>Elegance</em></h1><p>Charcoal-fired flavor,<br/> made for sharing.</p><Link href="/menu" className="mobile-cta small order-cta">Order Now <ArrowRight size={18}/></Link></div><div className="mobile-hero-dots"><i/><i/><i/><i/></div></section>
     <div className="mobile-shortcuts">{[{name:'Food',icon:UtensilsCrossed,href:'/menu'},{name:'Drinks',icon:Coffee,href:'/menu?category=drinks'},{name:'Offers',icon:Gift,href:'/rewards'},{name:'Menu',icon:BookOpen,href:'/menu'}].map(({name,icon:Icon,href})=><Link href={href} key={name}><Icon size={24} strokeWidth={1.8}/>{name}</Link>)}</div>
     <section className="mobile-section"><div className="mobile-section-title"><h2>Popular Dishes</h2><Link href="/menu">See all <ArrowRight size={14}/></Link></div><div className="mobile-feature-grid">{featured.map((item,index)=><article className="mobile-feature-card" key={item.id}><FoodArt kind={index ? 'pasta' : 'steak'} src={item.image} alt={item.name}/><strong>{item.name}</strong><b>${item.price.toFixed(2)}</b><button onClick={()=>addToCart(item)} aria-label={`Add ${item.name} to cart`}><Plus size={22}/></button></article>)}</div></section>
-    <Link href="/about" className="mobile-about-link">Our Restaurant <ArrowRight size={18}/></Link>
+    <Link href="/about" className="mobile-about-link"><span className="promo-chef"><ChefHat/></span><span><strong>Good Food.<br/>Great Mood.</strong><small>Dine, Share, Enjoy.</small><b>View Menu <ArrowRight size={14}/></b></span><FoodArt kind="restaurant" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1000&auto=format&fit=crop" alt="Warmly lit restaurant table"/></Link>
   </div>;
 }
 
